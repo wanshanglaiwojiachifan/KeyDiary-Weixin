@@ -1,0 +1,12 @@
+*.swp
+node_modules/
+nohup.out
+*.log
+.DS_Store
+coverage.html
+cov/
+.cov/
+.lock-wscript
+build/
+public/status.taobao
+config/config.js
