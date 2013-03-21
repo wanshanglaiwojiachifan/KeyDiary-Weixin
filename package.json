@@ -14,5 +14,5 @@
     "should": "*",
     "jscover": ">=0.2.0"
   },
-  "main": "index"
+  "main": "app.js"
 }

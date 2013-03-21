@@ -10,3 +10,4 @@ cov/
 build/
 public/status.taobao
 config/config.js
+.naeindex
