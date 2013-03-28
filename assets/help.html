@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>KeyDiary - 关键字日记</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="format-detection" content="telephone=no" />
+  <style>
+  .header {
+    width: 100%;
+    color: #45D4DA;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .topbar {
+    width: 100%;
+    height: 4px;
+    background-color: #45D4DA;
+  }
+  .container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
+    font-size: 16px;
+  }
+  .content {
+    margin-left: 10px;
+  }
+  .content h3 {
+    margin: 20px 0;
+  }
+  .content div{
+    margin-top: 10px;
+  }
+  hr {
+    margin: 20px;
+  }
+  </style>
+</head>
+
+<body class="account">
+  <div class="container">
+    <div class="topbar"></div>
+    <div class="header">
+      <div class="title">
+        <h1>
+          <a href="javascript:;" title="KeyDiary">
+            <img src="image/key_diary.jpg" alt="KeyDiary" />
+          </a>
+        </h1>
+      </div>
+    </div>
+
+  <div class="content">
+    <h3>KeyDiary使用帮助！</h3>
+    <div>1.使用需要有<a href="http://keydiary.net">KeyDiary</a> 的帐号，并与之<a id="bind">绑定</a>。</div>
+    <div>2.输入"@帮助"或"@help"来查看使用帮助。</div>
+    <div>3.直接发送消息记录您今天的生活(7字内)。</div>
+    <div>4.输入'@+ “内容”'，可以把“内容”追加到今天的日记，但是日记的总长度仍然不能超过7个字。</div>
+    <div>5.输入'@1'，查看今天记录的关键字。</div>
+    <div>6.暂时不响应除文字之外的其他输入。</div>
+    <div>7.记录的时候会把凌晨6点之前发送的都记录到前一天。您可以在睡觉前记录这一天的生活！</div>
+    <h5>祝您使用愉快！晚上来我家吃饭小组荣誉出品。</h5>
+  </div>
+</div>
+</body>
+<script>
+  var bind = document.getElementById('bind');
+  bind.setAttribute('href', 'http://keydiary.net/app/accounts/auth' + window.location.search);
+</script>
+</html>

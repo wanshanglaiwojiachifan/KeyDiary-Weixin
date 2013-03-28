@@ -11,45 +11,84 @@ var utility = require('utility');
 var config = require('../config');
 
 var URLS = {
-  bind: 'http://api.keydiary.net/accounts/bindwx',
-  create: 'http://api.keydiary.net/diaries/upsert'
+  upsert: 'http://api.keydiary.net/diaries/upsert',
+  getOne: 'http://api.keydiary.net/diaries/one',
+  append: 'http://api.keydiary.net/diaries/append'
 };
 
-function handleError(err, data, res) {
+function handleResponse(err, data, res) {
   if (err) {
-    return err;
+    return {error: err};
   }
   if (res.statusCode !== 200) {
-    err = new Error('keydiary api http response statusCode is ' + res.statusCode);
+    err = new Error('keydiary api response error');
     err.statusCode = res.statusCode;
-    return err;
+  }
+  try {
+    data = JSON.parse(data);
+  } catch (e) {
+    err = err ? err : new Error('parse data error');
+    err.data = String(data);
+    return {error: err};
   }
   if (data.stat !== 1) {
-    err = new Error('keydiary api service response stat is ' + data.stat);
+    err = err ? err : new Error('keydiary api response error');
     err.code = data.stat;
-    return err;
   }
+  if (err) {
+    return {error: err};
+  }
+  return {data: data};
 }
-exports.bind = function (email, pwd, openId, callback) {
+
+exports.getOne = function (openId, d, callback) {
   var data = {
-    openId: openId,
+    d: d,
+    sid: config.source,
     accessKey: config.accessKey,
     source: config.source
   };
   var headers = {
-    Authorization: 'Basic ' + utility.base64encode(email + ':' + pwd)
+    Authorization: 'Basic ' + utility.base64encode('wechat:' + openId)
   };
-  urllib.request(URLS.bind, {
-    type: 'POST',
-    headers: headers,
-    data: data
+  urllib.request(URLS.getOne, {
+    type: 'GET',
+    data: data,
+    headers: headers
   }, function (err, data, res) {
-    err = handleError(err, data, res);
-    callback(err);
+    var result = handleResponse(err, data, res);
+    callback(result.error, result.data ? result.data.data : null);
   });
 };
 
 exports.create = function (openId, content, d, callback) {
+  exports.getOne(openId, d, function (err, oldData) {
+    if (err) {
+      return callback(err);
+    }
+    var data = {
+      content: content,
+      d: d,
+      source: config.source,
+      sid: config.source,
+      accessKey: config.accessKey
+    };
+    var headers = {
+      Authorization: 'Basic ' + utility.base64encode('wechat:' + openId)
+    };
+    urllib.request(URLS.upsert, {
+      type: 'POST',
+      headers: headers,
+      data: data
+    }, function (err, data, res) {
+      var result = handleResponse(err, data, res);
+      result.data.data.oldContent = oldData ? oldData.content : null;
+      callback(result.error, result.data ? result.data.data : null);
+    });
+  });
+};
+
+exports.append = function (openId, content, d, callback) {
   var data = {
     content: content,
     d: d,
@@ -60,12 +99,12 @@ exports.create = function (openId, content, d, callback) {
   var headers = {
     Authorization: 'Basic ' + utility.base64encode('wechat:' + openId)
   };
-  urllib.request(URLS.create, {
+  urllib.request(URLS.append, {
     type: 'POST',
     headers: headers,
     data: data
   }, function (err, data, res) {
-    err = handleError(err, data, res);
-    callback(err, err || data.data);
+    var result = handleResponse(err, data, res);
+    callback(result.error, result.data ? result.data.data : null);
   });
-};
+}

@@ -8,9 +8,6 @@ NPM_REGISTRY = --registry=http://registry.npm.taobao.net
 NPM_INSTALL_PRODUCTION = PYTHON=`which python2.6` NODE_ENV=production npm install $(NPM_REGISTRY)
 NPM_INSTALL_TEST = PYTHON=`which python2.6` NODE_ENV=test npm install $(NPM_REGISTRY)
 
-check:
-	@curl -s http://npm.taobao.org/version/check.sh | sh
-
 install:
 	@$(NPM_INSTALL_PRODUCTION)
 

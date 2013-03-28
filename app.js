@@ -10,6 +10,8 @@ var connect = require('connect');
 var config = require('./config');
 var route = require('./route');
 var app = connect();
+
+app.use('/assets', connect.static(__dirname + '/assets', {maxAge: 86400000}));
 app.use(connect.query());
 route(app);
 app.listen(config.port);

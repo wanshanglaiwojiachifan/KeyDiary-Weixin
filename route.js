@@ -9,20 +9,24 @@
 //var urlrouter = require('urlrouter');
 var wechat = require('wechat');
 var config = require('./config');
-var ctr = require('./controller/ctr');
+var diary = require('./controller/diary');
+var prompt = require('./controller/prompt');
 
 module.exports = function (app) {
   app.use('/weixin', wechat(config.token, function (req, res) {
     if (req.weixin.MsgType !== 'text') {
-      return ctr.help(req, res);
+      return prompt.help(req, res);
     }
     var content = req.weixin.Content || '';
-    if (content.indexOf('$绑定') === 0) {
-      return ctr.bind(req, res);
+    if (content.indexOf('@help') === 0 || content.indexOf('@帮助') === 0) {
+      return prompt.help(req, res);
     }
-    if (content.indexOf('$help') === 0 || content.indexOf('$帮助') === 0) {
-      return ctr.help(req, res);
+    if (content.indexOf('@+') === 0) {
+      return diary.append(req, res);
     }
-    return ctr.create(req, res);
+    if (content.indexOf('@1') === 0) {
+      return diary.findToday(req, res);
+    }
+    return diary.create(req, res);
   }));
 };
