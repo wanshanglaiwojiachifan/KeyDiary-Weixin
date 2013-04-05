@@ -17,10 +17,10 @@ function handleError(err, req, res) {
   console.log(err);
   if (err.statusCode === 401) {
     return res.reply([{
-      title: '连接KeyDiary',
-      description: '您的微信帐号尚未与KeyDiary帐号绑定，点击进行绑定之后继续使用！',
+      title: '连接 KeyDiary',
+      description: '您的微信帐号尚未与 KeyDiary 帐号绑定，点击进行绑定之后继续使用！',
       picurl: config.serverHost + '/assets/image/bind.jpg',
-      url: 'http://keydiary.net/app/accounts/auth?openId=' + req.weixin.FromUserName
+      url: 'http://api.keydiary.net/app/accounts/auth?openId=' + req.weixin.FromUserName
     }]);  
   }
   if (err.code === 2101) {
@@ -42,7 +42,7 @@ exports.create = function (req, res) {
   var openId = req.weixin.FromUserName;
   content = utils.formatDiary(content);
   if (utils.getStrLen(content) > 14) {
-    return res.reply('请用少于七个字记录您的生活！');
+    return res.reply('日记长度超过了七个字！');
   }
   api.create(openId, content, today(), function (err, data) {
     if (err) {
@@ -57,7 +57,7 @@ exports.append = function (req, res) {
   var openId = req.weixin.FromUserName;
   content = utils.formatDiary(content);
   if (utils.getStrLen(content) > 14) {
-    return res.reply('请用少于七个字记录您的生活！');
+    return res.reply('日记长度超过了七个字！');
   }
   var d = moment();
   if (d.hour() < 6) {
