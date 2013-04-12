@@ -10,7 +10,8 @@
     "wechat": "0.3.5",
     "urllib": "0.3.4",
     "utility": "0.0.3",
-    "moment": "2.0.0"
+    "moment": "2.0.0",
+    "pwechat": "0.0.1"
   },
   "devDependencies": {
     "mocha": "*",

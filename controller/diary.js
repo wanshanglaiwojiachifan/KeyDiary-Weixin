@@ -11,10 +11,11 @@ var utils = require('../lib/utils');
 var moment = require('moment');
 var tips = require('../lib/tips');
 var config = require('../config');
+var logger = require('../common/logger');
 
 function handleError(err, req, res) {
   err.weixin = req.weixin;
-  console.log(err);
+  logger.error(err);
   if (err.statusCode === 401) {
     return res.reply([{
       title: '连接KeyDiary',

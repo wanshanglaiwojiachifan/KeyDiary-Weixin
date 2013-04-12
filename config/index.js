@@ -12,7 +12,14 @@ var fs = require('fs');
 var existsSync = fs.existsSysc ? fs.existsSync : path.existsSync;
 var config = {
   port: 8080,
-  token: 'input weixin token'
+  token: 'input weixin token',
+  accessKey: 'input accessKey',
+  source: 2,
+  serverHost: 'http://keydiarywx.cnodejs.net',
+  pwechatConf: {
+    email: 'input your email',
+    password: 'input your password'
+  }
 };
 var customConfig = path.join(__dirname, 'config.js');
 // 非测试环境需要加载相应对配置文件

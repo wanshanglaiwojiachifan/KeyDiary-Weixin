@@ -8,6 +8,8 @@
  */
 var tips = require('../lib/tips');
 var config = require('../config');
+var logger = require('../common/logger');
+var api = require('../proxy/api');
 
 exports.help = function (req, res) {
   res.reply([{
@@ -22,12 +24,22 @@ exports.notSupport = function (req, res) {
   res.reply(tips.notSupport);
 };
 
-exports.autoResponse = function (req, res) {
-  Simsimi.ask(req.weixin.Content, function (err, data) {
+exports.handleBind = function (req, res) {
+  var weixin = req.weixin;
+  api.bind(weixin.FromUserName, weixin.Content, weixin.CreateTime, function (err, data) {
     if (err) {
-      console.log(err);
-      return res.reply(tips.errorMsg());
+      res.reply(tips.errorMsg());
     }
+    console.log(err, data);
     res.reply(data);
   });
 };
+// exports.autoResponse = function (req, res) {
+//   Simsimi.ask(req.weixin.Content, function (err, data) {
+//     if (err) {
+//       logger.error(err);
+//       return res.reply(tips.errorMsg());
+//     }
+//     res.reply(data);
+//   });
+// };

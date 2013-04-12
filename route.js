@@ -27,6 +27,9 @@ module.exports = function (app) {
     if (content.indexOf('@1') === 0) {
       return diary.findToday(req, res);
     }
+    if (content.indexOf('@提醒') === 0) {
+      return prompt.handleBind(req, res);
+    }
     return diary.create(req, res);
   }));
 };

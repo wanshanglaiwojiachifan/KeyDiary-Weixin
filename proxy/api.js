@@ -9,6 +9,7 @@
 var urllib = require('urllib');
 var utility = require('utility');
 var config = require('../config');
+var pusher = require('../common/pusher');
 
 var URLS = {
   upsert: 'http://api.keydiary.net/diaries/upsert',
@@ -107,4 +108,21 @@ exports.append = function (openId, content, d, callback) {
     var result = handleResponse(err, data, res);
     callback(result.error, result.data ? result.data.data : null);
   });
+};
+
+exports.bind = function (openId, keyWord, timestamp, callback) {
+  setTimeout(function () {
+    pusher.getMessage(keyWord, 1, 10000000, function (err, data) {
+      if (err) {
+        return callback(err);
+      }
+      for (var i = 0, l = data.length; i < l; i++) {
+        var msg = data[i];
+        if (msg.dateTime === timestamp) {
+          return callback(null, msg.fakeId);
+        }
+      }
+      callback(null, null);
+    });
+  }, 2000);
 }
