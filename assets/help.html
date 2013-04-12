@@ -59,20 +59,22 @@
     </div>
 
   <div class="content">
-    <h3>KeyDiary使用帮助！</h3>
-    <div>1.使用需要有<a href="http://keydiary.net">KeyDiary</a> 的帐号，并与之<a id="bind">绑定</a>。</div>
-    <div>2.输入"@帮助"或"@help"来查看使用帮助。</div>
+    <h3>KeyDiary 使用帮助</h3>
+    <div>1.使用需要有 <a id="register">KeyDiary</a> 的帐号，并与之<a id="bind">绑定</a>。</div>
+    <div>2.输入「@帮助」或「@help」来查看使用帮助。</div>
     <div>3.直接发送消息记录您今天的生活(7字内)。</div>
-    <div>4.输入'@+ “内容”'，可以把“内容”追加到今天的日记，但是日记的总长度仍然不能超过7个字。</div>
-    <div>5.输入'@1'，查看今天记录的关键字。</div>
+    <div>4.输入「@+ “内容”」，可以把“内容”追加到今天的日记，但是日记的总长度仍然不能超过7个字。</div>
+    <div>5.输入「@1」，查看今天记录的关键字。</div>
     <div>6.暂时不响应除文字之外的其他输入。</div>
     <div>7.记录的时候会把凌晨6点之前发送的都记录到前一天。您可以在睡觉前记录这一天的生活！</div>
-    <h5>祝您使用愉快！晚上来我家吃饭小组荣誉出品。</h5>
+    <h5>祝您使用愉快！「晚上来我家吃饭小组」荣誉出品。</h5>
   </div>
 </div>
 </body>
 <script>
   var bind = document.getElementById('bind');
-  bind.setAttribute('href', 'http://keydiary.net/app/accounts/auth' + window.location.search);
+  bind.setAttribute('href', 'http://api.keydiary.net/app/accounts/auth' + window.location.search);
+  var register = document.getElementById('register');
+  register.setAttribute('href', 'http://api.keydiary.net/app/accounts/register' + window.location.search);
 </script>
 </html>

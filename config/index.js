@@ -3,7 +3,9 @@
  * Copyright(c) 2012 Taobao.com
  * Author: dead_horse <dead_horse@qq.com>
  */
+
 "use strict";
+
 /**
  * Module dependencies.
  */

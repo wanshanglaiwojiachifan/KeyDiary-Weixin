@@ -14,7 +14,7 @@ var api = require('../proxy/api');
 exports.help = function (req, res) {
   res.reply([{
     title: '使用帮助',
-    description: 'KeyDiary微信公众帐号使用帮助',
+    description: 'KeyDiary 微信公众帐号使用帮助',
     picurl: config.serverHost + '/assets/image/help.jpg',
     url: config.serverHost + '/assets/help.html?openId=' + req.weixin.FromUserName
   }]);
